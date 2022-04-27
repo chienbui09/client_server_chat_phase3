@@ -1,2 +1,7 @@
-public class model {
-}
+package model;
+
+public enum Type{
+        REGISTER,
+        LOGIN,
+        ECHO;
+    }
