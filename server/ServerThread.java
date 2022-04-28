@@ -15,14 +15,11 @@ public class ServerThread implements Runnable{
     Message message;
 
     //declare input/output stream
-    ObjectInputStream inputStream;
+    ObjectInputStream inputStresam;
     ObjectOutputStream outputStream;
 
 
     // method
-    boolean isUserExisted(Message message){
-        return
-    }
 
     public void run() {
 
