@@ -18,12 +18,14 @@ public class Server {
 
             try {
                 listener = new ServerSocket(serverPort);
+                System.out.println("Binding to port " + serverPort + "...");
                 System.out.println("server is on");
                 ExecutorService threadPool = Executors.newFixedThreadPool(numOfThread);
 
 
                 while (true){
                     threadPool.execute(new ServerThread(listener.accept()));
+
                 }
             } catch (IOException e){
                 System.err.println("cant bind to port\nport is in use");

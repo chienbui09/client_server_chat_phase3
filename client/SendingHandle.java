@@ -202,6 +202,7 @@ public class SendingHandle implements Runnable{
                         System.out.println("selected: "+ selector);
                         clientMsg.setMsgType(Type.ECHO);
                         System.out.println("******************ECHO******************");
+                        System.out.println("enter \"E\" to exit");
                         while (true){
                             System.out.println("message: >> ");
                             message = scanner.nextLine();
@@ -212,7 +213,7 @@ public class SendingHandle implements Runnable{
                             outputStream.flush();
 
                             // check whether client want to send message again or not
-                            if(!isContinued(scanner)){
+                            if(message.equalsIgnoreCase("E")){
                                 System.out.println("terminate \"ECHO\" session.");
                                 break;
                             }

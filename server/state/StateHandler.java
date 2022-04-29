@@ -20,7 +20,13 @@ public class StateHandler implements UserState{
     public StateHandler(User user){ this.user = user;}
     @Override
     public boolean login(User user) throws IOException {
-        return false;
+        User existedUser = null;
+        try {
+            existedUser = checkLogin(user);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return existedUser != null;
     }
 
     @Override
@@ -33,6 +39,7 @@ public class StateHandler implements UserState{
         } catch (SQLException e){
             e.printStackTrace();
         }
+
         if(isUserExisted == null){
             boolean isCreated = false;
             try{
@@ -40,7 +47,12 @@ public class StateHandler implements UserState{
             } catch (SQLException e){
                 e.printStackTrace();
             }
+
+            return isCreated;
+        } else{
+            return false;
         }
+
     }
 
     @Override
@@ -49,7 +61,7 @@ public class StateHandler implements UserState{
     }
 
     private synchronized User isUserExisted(User user) throws SQLException{
-        User existesUser = null;
+        User existedUser = null;
         try(DBConnection dbHelper = DBConnection.getDBHelper();
             Connection connection = dbHelper.getConnection();
             PreparedStatement statement = connection.prepareStatement(GET_USER_BY_USERNAME) )
@@ -57,10 +69,10 @@ public class StateHandler implements UserState{
             statement.setString(1, user.getUserName());
             ResultSet results = statement.executeQuery();
             if(results.next()){
-                existesUser = new User();
-                existesUser.setUserName(results.getString("name"));
+                existedUser = new User();
+                existedUser.setUserName(results.getString("name"));
             }
-            return existesUser;
+            return existedUser;
         }
     }
 
